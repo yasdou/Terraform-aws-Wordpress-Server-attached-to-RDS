@@ -31,9 +31,3 @@ resource "aws_rds_cluster_instance" "clusterinstance" {
     Name = "auroracluster-db-instance${count.index + 1}"
   }
 }
-
-resource "aws_rds_cluster_endpoint" "WPRDSendpoint" {
-  cluster_identifier          = aws_rds_cluster.Wordpressrds.id
-  cluster_endpoint_identifier = "writer"
-  custom_endpoint_type        = "ANY"
-}
