@@ -1,4 +1,4 @@
-resource "aws_instance" "bastion_host" {
+resource "aws_instance" "Webserver" {
   ami           = var.ami_id
   instance_type = var.instance_type
   key_name      = var.ami_key_pair_name
@@ -9,4 +9,5 @@ resource "aws_instance" "bastion_host" {
   tags = {
     Name = "Wordpress"
   }
+  depends_on = [aws_rds_cluster_instance.clusterinstance]
 }

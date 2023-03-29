@@ -1,12 +1,12 @@
-resource "aws_rds_cluster" "RDSWP" {
-  cluster_identifier = "wordpress"
+resource "aws_rds_cluster" "Wordpressrds" {
+  cluster_identifier = "wordpressrds"
   engine             = "aurora-mysql"
   engine_version     = "5.7.mysql_aurora.2.11.1"
   database_name      = var.DBName
   master_username    = var.DBUser
   master_password    = var.DBPassword
   vpc_security_group_ids    = [aws_security_group.allow_aurora_access.id]
-  db_subnet_group_name      = aws_db_subnet_group.DBSubnetGroup.id ##
+  db_subnet_group_name      = aws_db_subnet_group.WPDBSubnetGroup.id
   skip_final_snapshot       = true
   final_snapshot_identifier = "aurora-final-snapshot"
 
@@ -21,7 +21,7 @@ resource "aws_rds_cluster" "RDSWP" {
 
 resource "aws_rds_cluster_instance" "clusterinstance" {
   count              = 2
-  identifier         = "clusterinstance-${count.index}"
+  identifier         = "wpclusterinstance-${count.index}"
   cluster_identifier = aws_rds_cluster.RDSWP.id
   instance_class     = "db.t3.small"
   engine             = "aurora-mysql"
@@ -32,8 +32,8 @@ resource "aws_rds_cluster_instance" "clusterinstance" {
   }
 }
 
-resource "aws_rds_cluster_endpoint" "RDSendpoint" {
-  cluster_identifier          = aws_rds_cluster.RDSWP.id
+resource "aws_rds_cluster_endpoint" "WPRDSendpoint" {
+  cluster_identifier          = aws_rds_cluster.Wordpressrds.id
   cluster_endpoint_identifier = "writer"
   custom_endpoint_type        = "ANY"
 }

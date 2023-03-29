@@ -54,8 +54,8 @@ resource "aws_subnet" "private_database_subnet_2" {
   }
 }
 
-resource "aws_db_subnet_group" "DBSubnetGroup" {
-  name       = "subnetgroupdb"
+resource "aws_db_subnet_group" "WPDBSubnetGroup" {
+  name       = "wpsubnetgroupdb"
   subnet_ids = [aws_subnet.private_database_subnet_1.id, aws_subnet.private_database_subnet_2.id]
 
   tags = {
